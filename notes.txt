@@ -1,0 +1,107 @@
+INSERT INTO Profiles (Email, Password)
+VALUES 
+('someEmail@gmail.com', 'unhashedPassword'),
+('someEmail2@gmail.com', 'unhashedPassword2');
+
+
+INSERT INTO Items (UserID, ItemName, ItemAmount, ItemCategory, ItemPrice)
+VALUES
+(1, 'iPhone 11', 21, 'Electronics', 400.00),
+(2, 'HP Laptop', 200, 'Computers', 750.00),
+(1, 'Apple Headphones', 45, 'Accessories', 299.99),
+(2, 'Nike Running Shoes 2', 17, 'Footwear', 120.00),
+(1, 'Samsung Galaxy Z Fold', 27, 'Electronics', 499.99),
+(2, 'iPhone 12', 7, 'Electronics', 700.00),
+(1, 'Macbook Pro', 2, 'Computers', 1299.99),
+(2, 'AirPods', 120, 'Accessories', 119.99),
+(1, 'Adidas Running Shoes 1', 12, 'Footwear', 179.99),
+(2, 'LG Phone', 8, 'Electronics', 199.99);
+
+
+async function getProfileByEmail(userEmail) {
+    let [ rows ] = await sqlConn.query(
+        `SELECT * FROM Profiles 
+        WHERE Email = ?`, userEmail);
+    
+    if (rows.length == 0) {
+        return {message: "User not found"};
+    }    
+    
+    return rows[0];    
+}
+
+async function createUser(userInfo) {
+    if (!validator.isEmail(userInfo.email) || (userInfo.password).length < 7) {
+        throw({message: "Invalid Credentials"});
+    }
+
+    const salt = await bcrypt.genSalt();
+    //const hashPass = await bcrypt.hash(userInfo.password, salt);
+    
+    let [ rows ] = await sqlConn.query(`
+        INSERT INTO Profiles (email, password)
+        VALUES (?, ?)
+        `, userInfo.email, hashPass);
+    
+    return rows;
+}
+
+const sqlConn = require('./config');
+const validator = require('validator');
+const bcrypt = require('bcrypt');
+
+async function createUser(userInfo) {
+    if (!validator.isEmail(userInfo.email) || (userInfo.password).length < 7) {
+        throw({message: "Invalid Credentials"});
+    }
+    
+    let hashedPassword;
+
+    bcrypt.genSalt()
+        .then((salt) => {
+            bcrypt.hash(userInfo.password, salt)
+                .then(hashedPassword => {
+                    console.log(hashedPassword);
+                    sqlConn.query(`
+                        INSERT INTO Profiles (email, password)
+                        VALUES (?, ?)
+                        `, userInfo.email, hashedPassword)
+                            .then(data => {
+                                const [ rows ] = data;
+                                return rows;
+                            })
+                })
+        })
+        .catch(err => {
+            throw(err);
+        });    
+}
+
+async function getProfiles() {
+    let [ rows ] = await sqlConn.query("SELECT * FROM Profiles");
+    return rows;
+}
+
+async function getProfileByID(id) {}
+
+async function getProfileByEmail(userInfo) {
+    
+    let [ rows ] = await sqlConn.query(
+        `SELECT * FROM Profiles 
+        WHERE Email = ?`, userInfo.email);
+    
+    if (rows.length == 0) {
+        return {message: "User not found"};
+    }
+    
+    const auth = await bcrypt.compare(userInfo.password, rows[0].password);
+    
+    if (auth) {
+        return rows[0];
+    }
+    else {
+        throw({message: "invalid password"});
+    }    
+} 
+
+http://localhost:3000/create_item/7/Samsung%20Smart%20TV%20OLED/48/Electronics/499.99/null
