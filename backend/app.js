@@ -3,8 +3,6 @@ const morgan = require('morgan');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
-const { getItems } = require('./models/items');
-const { createToken, authenticateToken } = require('./controllers/authentication') 
 const profileRoutes = require('./routes/profilesRoutes');
 const itemRoutes = require('./routes/itemsRoutes');
 
