@@ -17,4 +17,7 @@ router.get('/login/:email/:password', profileController.login_valid);
 router.get('/isvalid', authenticateToken, (req, res) => {
     res.send("User is logged in");
 });
+
+// add routes for user sign up and user logging out
+
 module.exports = router;
