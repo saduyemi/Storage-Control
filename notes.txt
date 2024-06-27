@@ -105,3 +105,22 @@ async function getProfileByEmail(userInfo) {
 } 
 
 http://localhost:3000/create_item/7/Samsung%20Smart%20TV%20OLED/48/Electronics/499.99/null
+
+http://localhost:3000/update/item/11/LG%20Smart%20TV/49/Smart%20TVS/299.99/null
+
+async function updatePicture(itemID, newPic) {
+    // include if statement to use built in null setter for keyword when newPic == null
+
+    try {
+        const result = sqlConn.query(`
+            UPDATE Items
+            SET ItemPicture = ?
+            WHERE ItemID = ?            
+        `, [(newPic === 'null') ? null : newPic, itemID]);
+
+        return result;
+    }
+    catch (err) {
+        throw(err);
+    }
+}

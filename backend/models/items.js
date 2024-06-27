@@ -111,6 +111,8 @@ async function updatePrice(itemID, newPrice) {
 
 // Update picture
 async function updatePicture(itemID, newPic) {
+    if (newPic === 'null' || newPic === 'NULL') { newPic = null; }  // if statement to use built in null setter for keyword when newPic == null, so that the text "null" won't be stored in column
+
     try {
         const result = sqlConn.query(`
             UPDATE Items
@@ -128,9 +130,10 @@ async function updatePicture(itemID, newPic) {
 // Generic way to update all items
 async function updateItem(itemInfo) {
     try {
-        const { itemID, name, amount, category, price, picture } = itemInfo;
+        let { itemID, name, amount, category, price, picture } = itemInfo;
 
-
+        if (picture === 'null' || picture === 'NULL') { picture = null; }
+        
         const feedback = sqlConn.query(`
             UPDATE Items
             SET ItemName = ?, ItemAmount = ?, ItemCategory = ?, ItemPrice = ?, ItemPicture = ?
