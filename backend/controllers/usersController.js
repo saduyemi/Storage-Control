@@ -30,13 +30,13 @@ const createuser_post = async (req, res) => {
 
 // include
 const login_valid = async (req, res) => {
-    const userInfo = {email: req.params.email, password: req.params.password};
+    const userInfo = {email: req.body.email, password: req.body.password};
     
     try {
         const user = await getProfileByEmail(userInfo);
         const token = createToken(user.UserID);
         res.cookie('jwt', token, {httpOnly: true, maxAge: 900000 });
-        res.send(user);
+        res.json(user);
     }
     catch (err) {
         res.send(err);
@@ -65,7 +65,7 @@ const delete_post = async (req, res) => {
 }
 
 const logoffUser = async (req, res) => {
-    res.cookie('jwt', '', { maxAge: 1});
+    res.cookie('jwt', ' ', { maxAge: 1});
     res.json({ message: "User Logged Out" });
 }
 

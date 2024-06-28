@@ -2,12 +2,30 @@ import { useState } from 'react'
 import './Login.css'
 
 export default function Login() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [userEmail, setEmail] = useState("");
+    const [userPassword, setPassword] = useState("");
 
     async function handleSubmit(e) {
         e.preventDefault();
-
+        
+        const userInfo =  {email: userEmail, password: userPassword };
+        
+        const options = {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(userInfo)
+        };
+        
+        let data;
+        
+        try {
+            const response = await fetch("http://localhost:3000/login", options);
+            data = await response.json();
+            console.log(data);
+        }
+        catch(err) {
+            console.log(err);
+        }
     }
 
     return (

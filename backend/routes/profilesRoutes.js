@@ -12,7 +12,7 @@ router.get('/check/:email/:password', profileController.checkUser_get);
 
 router.get('/delete/:id', profileController.delete_post);
 
-router.get('/login/:email/:password', profileController.login_valid);
+router.post('/login', profileController.login_valid);
 
 router.get('/isvalid', authenticateToken, (req, res) => {
     res.send("User is logged in");
