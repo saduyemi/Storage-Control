@@ -1,0 +1,46 @@
+.loginContainer {
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: auto;
+    margin-top: 10%;
+    width: 75%;
+    height: 55%;
+}
+
+.loginForm {
+    border: 1px none blue;
+    border-radius: 10px;
+    height: 100%;
+    width: 100%;
+    padding: 5%;
+}
+
+.emailField {
+    margin: 10% 0%;
+    height: 10%;
+    width: 75%;
+}
+
+.passwordField {
+    height: 10%;
+    width: 75%;
+}
+
+.loginBtn {
+    border: 1px black none;
+    border-radius: 5px;
+    margin-top: 5%;
+    margin-left: 80%;
+    display: inline-block;
+    
+    width: 70px;
+    height: 40px;
+
+    background-color: skyblue;
+    color: white;
+    cursor: pointer;
+}
+.loginBtn:hover {
+    background-color: black;
+    color: black;
+}

@@ -18,6 +18,8 @@ router.get('/isvalid', authenticateToken, (req, res) => {
     res.send("User is logged in");
 });
 
+router.get('/logout', profileController.logoffUser);
+
 // add routes for user sign up and user logging out
 
 module.exports = router;

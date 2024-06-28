@@ -64,5 +64,9 @@ const delete_post = async (req, res) => {
     res.send(result);
 }
 
+const logoffUser = async (req, res) => {
+    res.cookie('jwt', '', { maxAge: 1});
+    res.json({ message: "User Logged Out" });
+}
 
-module.exports = { selectAllUsers, login_valid, createuser_post, checkUser_get, delete_post };
+module.exports = { selectAllUsers, login_valid, createuser_post, checkUser_get, delete_post, logoffUser };
