@@ -34,9 +34,9 @@ const login_valid = async (req, res) => {
     
     try {
         const user = await getProfileByEmail(userInfo);
-        const token = createToken(user.UserID);
+        const token = createToken(user.userID);
         res.cookie('jwt', token, {httpOnly: true, maxAge: 900000 });
-        res.json(user);
+        res.json({message: "User Logged In", userID: user.userID, userEmail: user.userEmail});
     }
     catch (err) {
         res.send(err);
@@ -69,4 +69,18 @@ const logoffUser = async (req, res) => {
     res.json({ message: "User Logged Out" });
 }
 
-module.exports = { selectAllUsers, login_valid, createuser_post, checkUser_get, delete_post, logoffUser };
+// extra remove 
+const login_server = async (req, res) => {
+    const userInfo = {email: req.params.email, password: req.params.password};
+    
+    try {
+        const user = await getProfileByEmail(userInfo);
+        const token = createToken(user.userID);
+        res.cookie('jwt', token, {httpOnly: true, maxAge: 900000 });
+        res.send(user);
+    }
+    catch (err) {
+        res.send(err);
+    } 
+}
+module.exports = { selectAllUsers, login_valid, createuser_post, checkUser_get, delete_post, logoffUser, login_server };

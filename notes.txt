@@ -124,3 +124,5 @@ async function updatePicture(itemID, newPic) {
         throw(err);
     }
 }
+
+http://localhost:3000/login/friendly@gmail.com/friend2002

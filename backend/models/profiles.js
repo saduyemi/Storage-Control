@@ -4,18 +4,27 @@ const bcrypt = require('bcrypt');
 
 async function createUser(userInfo) {
     if (!validator.isEmail(userInfo.email) || (userInfo.password).length < 7) {
-        return ({message: "Invalid Credentials"}); // throw this instead of returning
+        throw({message: "Invalid Credentials"}); // throw this instead of returning
     }
 
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(userInfo.password, salt); // increase size of password to 255
     
-    let [ rows ] = await sqlConn.query(`
-        INSERT INTO Profiles (email, password)
-        VALUES (?, ?)
-        `, [userInfo.email, hashedPassword]);
-    
-    return rows;
+    try {
+        let [ rows ] = await sqlConn.query(`
+            INSERT INTO Profiles (email, password)
+            VALUES (?, ?)
+            `, [userInfo.email, hashedPassword]);
+            
+        let [ feedback ] = await sqlConn.query(`SELECT * FROM Profiles WHERE Email = ?`, [userInfo.email]);
+        
+        return feedback[0]; //feedback[0];
+    }
+
+    catch (err) {
+        throw(err);
+    }    
+
 }
 
 
@@ -42,7 +51,7 @@ async function getProfileByEmail(userInfo) {
     const auth = await bcrypt.compare(userInfo.password, rows[0].Password);
     
     if (auth) {
-        return {message: "User Logged In"};
+        return {message: "User Logged In", userID: rows[0].UserID, userEmail: rows[0].Email};
     }
     else {
         throw({message: "Invalid Password"});

@@ -41,6 +41,5 @@
     cursor: pointer;
 }
 .loginBtn:hover {
-    background-color: black;
-    color: black;
+    color: skyblue;
 }

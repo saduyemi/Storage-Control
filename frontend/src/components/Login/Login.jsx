@@ -1,9 +1,17 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import './Login.css'
+import { LoginContext } from '../../App'
+
+import { useNavigate } from 'react-router-dom';
+
 
 export default function Login() {
+    const {user, setUser} = useContext(LoginContext);
+
     const [userEmail, setEmail] = useState("");
     const [userPassword, setPassword] = useState("");
+
+    const navigate = useNavigate();
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -12,7 +20,10 @@ export default function Login() {
         
         const options = {
             method: "POST",
-            headers: {"Content-Type": "application/json"},
+            headers: {"Content-Type": "application/json",
+                    // "Access-Control-Allow-Credentials": true <- works without this because credentials property below
+                    },
+            credentials: "include",
             body: JSON.stringify(userInfo)
         };
         
@@ -22,9 +33,13 @@ export default function Login() {
             const response = await fetch("http://localhost:3000/login", options);
             data = await response.json();
             console.log(data);
+            setUser(data.userEmail);
+            navigate("/home");
         }
         catch(err) {
             console.log(err);
+            setUser(null);
+            navigate("/");
         }
     }
 
@@ -33,12 +48,12 @@ export default function Login() {
             <div className='loginContainer'>
                 <form className='loginForm' onSubmit={(e) => handleSubmit(e)}>
                     <label htmlFor='email'> Email: </label>
-                    <input type='email' name='email' className='emailField' placeholder='Enter Email' onChange={(e) => { setEmail(e.target.value); }} />
+                    <input type='email' id='email' className='emailField' placeholder='Enter Email' onChange={(e) => { setEmail(e.target.value); }} />
                     
                     <br/>
                     
                     <label htmlFor='password'> Password: </label>
-                    <input type='password' name='password' className='passwordField' placeholder='Enter Password' onChange={(e) => { setPassword(e.target.value); }} />
+                    <input type='password' id='password' className='passwordField' placeholder='Enter Password' onChange={(e) => { setPassword(e.target.value); }} />
                     
                     <br/>
                     <button className='loginBtn'> Login </button>

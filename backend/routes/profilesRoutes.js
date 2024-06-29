@@ -15,11 +15,13 @@ router.get('/delete/:id', profileController.delete_post);
 router.post('/login', profileController.login_valid);
 
 router.get('/isvalid', authenticateToken, (req, res) => {
+    //console.log(req.userID);
     res.send("User is logged in");
 });
 
 router.get('/logout', profileController.logoffUser);
 
-// add routes for user sign up and user logging out
+//router.get('/login/:email/:password', profileController.login_server);
+
 
 module.exports = router;

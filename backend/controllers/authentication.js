@@ -22,7 +22,8 @@ const authenticateToken = (req, res, next) => {
                 res.send( { message: err} ); 
             }
             else {
-                console.log(decodedToken);
+                console.log(`User ID: ${decodedToken.id} Requested Data`);
+                req.userID = decodedToken.id; // create a new property for req named userID it'll store the value of id that is stored in payload
                 next();
             }
         });
@@ -37,5 +38,10 @@ const authenticateToken = (req, res, next) => {
     }
 }
 
-module.exports = { createToken, authenticateToken };
+const checkProfile = (req, res, next) => {
+    res.locals.extra = "some text";
+    console.log("Local Stored");
+    next();
+}
+module.exports = { createToken, authenticateToken, checkProfile };
 
