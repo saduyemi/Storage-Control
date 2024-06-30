@@ -4,21 +4,24 @@ const profileController = require('../controllers/usersController');
 
 const router = Router();
 
-// Sign In and Sign Out
-router.post('/login', profileController.login_valid);
-router.post('/logout', profileController.logoffUser);
+//router.get('/users', profileController.selectAllUsers); // this is not needed
 
-// Create Account
 router.get('/create/:email/:password', profileController.createuser_post); // keep, but change to post
 
-// Delete Account
+//router.get('/check/:email/:password', profileController.checkUser_get);
+
 router.get('/delete/:id', profileController.delete_post);
 
-// Validation Helper
+router.post('/login', profileController.login_valid);
+
 router.post('/isvalid', authenticateToken, (req, res) => {
     //console.log(req.userID);
     res.send({ message: "User is logged in" });
 }); // Note if want to check cookies from a frontend application, have to make the request post and in options credentials: "include"
+
+router.get('/logout', profileController.logoffUser);
+
+//router.get('/login/:email/:password', profileController.login_server);
 
 
 module.exports = router;

@@ -21,10 +21,10 @@ const createuser_post = async (req, res) => {
         const user = await createUser(userInfo);
         const token = createToken(user.UserID);
         res.cookie('jwt', token, {httpOnly: true, maxAge: 900000 });
-        res.send(user);
+        res.status(201).send(user);
     }
     catch (err) {
-        res.send(err);
+        res.status(400).send(err);
     }
 }
 
@@ -36,10 +36,10 @@ const login_valid = async (req, res) => {
         const user = await getProfileByEmail(userInfo);
         const token = createToken(user.userID);
         res.cookie('jwt', token, {httpOnly: true, maxAge: 900000 });
-        res.json({message: "User Logged In", userID: user.userID, userEmail: user.userEmail});
+        res.status(200).json({message: "User Logged In", userID: user.userID, userEmail: user.userEmail});
     }
     catch (err) {
-        res.send(err);
+        res.status(404).send(err);
     } 
 }
 

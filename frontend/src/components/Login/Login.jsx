@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 export default function Login() {
-    const {user, setUser} = useContext(LoginContext);
+    //const {user, setUser} = useContext(LoginContext);
 
     const [userEmail, setEmail] = useState("");
     const [userPassword, setPassword] = useState("");
@@ -33,13 +33,13 @@ export default function Login() {
             const response = await fetch("http://localhost:3000/login", options);
             data = await response.json();
             console.log(data);
-            setUser(data.userEmail);
+            localStorage.user = data.userEmail;
             navigate("/home");
         }
         catch(err) {
+            if (localStorage.user) { localStorage.removeItem(user); }
             console.log(err);
-            setUser(null);
-            navigate("/");
+            navigate("/login");
         }
     }
 

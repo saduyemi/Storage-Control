@@ -2,9 +2,10 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 
 dotenv.config();
-const maxAge = 3 * 24 * 60 * 60;
+const maxAge = 900; // 15 minutes is 900 seconds
 
 const createToken = (id) => {
+    console.log(`Creating token for ${id}`);
     return jwt.sign({ id }, process.env.JWT_SIGNATURE, { expiresIn: maxAge });
 }
 
@@ -14,12 +15,13 @@ const createToken = (id) => {
 const authenticateToken = (req, res, next) => {
     const token = req.cookies.jwt;
 
+    //console.log(req.cookies); <- to check if getting cookies
     // check if jwt exists
     if (token) {
         jwt.verify(token, process.env.JWT_SIGNATURE, (err, decodedToken) => {
             if (err) {
                 console.log(err);
-                res.send( { message: err} ); 
+                res.send( { message: "Tampered"} ); 
             }
             else {
                 console.log(`User ID: ${decodedToken.id} Requested Data`);
@@ -31,17 +33,13 @@ const authenticateToken = (req, res, next) => {
 
     // if jwt doesn't exist
     else {
-        console.log( { message: "Not Verified" });
-        res.send( {message: "Not verified"} );
+        console.log( { message: "JWT Does Not Exist" });
+        res.status(401).send({message: "JWT Does Not Exist" });
         // redirect to login page here add and comment out rest
         //next(); uncommenting this will show error because already sent a reponse in this middleware
     }
 }
 
-const checkProfile = (req, res, next) => {
-    res.locals.extra = "some text";
-    console.log("Local Stored");
-    next();
-}
-module.exports = { createToken, authenticateToken, checkProfile };
+
+module.exports = { createToken, authenticateToken };
 

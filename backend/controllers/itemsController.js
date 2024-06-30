@@ -7,15 +7,14 @@ const selectAllItems = async (req, res) => {
 }
 
 const selectItem = async (req, res) => {
-    const id = Number(req.params.id);
-
+    const id = Number(req.userID);
     try {
         const rows = await getAllItemsForUser(id);
-        res.send(rows);
+        res.status(200).json(rows);
     }
     catch (err) {
         console.log(err);
-        res.send({ message: err});
+        res.status(404).send({ message: err});
     }
 
 }

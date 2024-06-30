@@ -16,12 +16,11 @@ const corsOptions = {
 app.listen(3000);
 
 // middleware
-app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cookieParser());
-//app.use(morgan('dev'));
-
+app.use(cookieParser()); // cookie-parser has to be before cors so that it works properly
+app.use(cors(corsOptions));
+app.use(morgan('dev'));
 
 // Routes
 app.use(profileRoutes);
