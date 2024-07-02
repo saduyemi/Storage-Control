@@ -10,7 +10,7 @@ const selectItem = async (req, res) => {
     const id = Number(req.userID);
     try {
         const rows = await getAllItemsForUser(id);
-        res.status(200).json(rows);
+        res.status(200).json({ result: rows });
     }
     catch (err) {
         console.log(err);
@@ -31,11 +31,11 @@ const createNewItem = async (req, res) => {
 
     try {
         const result = await createItem(newItem);
-        res.send(result);
+        res.status(201).json({feedback: result});
     }
     catch (err) {
         console.log(err);
-        res.json({message: "Object was not created"}); 
+        res.status(400).json({message: "Object was not created"}); 
     }
 }
 
@@ -45,11 +45,11 @@ const updateItemName = async (req, res) => {
 
     try {
         const result = await updateName(itemID, newName);
-        res.send(result);
+        res.status(200).json({feed: result});
     }
     catch (err) {
         console.log(err);
-        res.json({ message: "Error occured item name was not changed" });
+        res.status(400).json({ message: "Error occured item name was not changed" });
     }
 }
 
@@ -59,11 +59,11 @@ const updateItemAmount = async (req, res) => {
 
     try {
         const result = await updateAmount(itemID, newAmount);
-        res.send(result);
+        res.status(200).json({ feed: result});
     }
     catch (err) {
         console.log(err);
-        res.json({ message: "Error occured item amount was not changed" });
+        res.status(400).json({ message: "Error occured item amount was not changed" });
     }
 }
 
@@ -73,11 +73,11 @@ const updateItemCategory = async (req, res) => {
 
     try {
         const result = await updateCategory(itemID, newCategory);
-        res.send(result);
+        res.status(200).json({feed: result});
     }
     catch (err) {
         console.log(err);
-        res.json({ message: "Error occured item category was not changed" });
+        res.status(400).json({ message: "Error occured item category was not changed" });
     }
 }
 
@@ -87,11 +87,11 @@ const updateItemPrice = async (req, res) => {
 
     try {
         const result = await updatePrice(itemID, newPrice);
-        res.send(result);
+        res.status(200).json({feed: result});
     }
     catch (err) {
         console.log(err);
-        res.json({ message: "Error occured, item PRICE was not changed" });
+        res.status(400).json({ message: "Error occured, item PRICE was not changed" });
     }
 }
 
@@ -101,11 +101,11 @@ const updateItemPicture = async (req, res) => {
 
     try {
         const result = await updatePicture(itemID, newPicture);
-        res.send(result);
+        res.status(200).json({feed: result});
     }
     catch (err) {
         console.log(err);
-        res.json({ message: "Error occured, item PICTURE was not changed" });
+        res.status(400).json({ message: "Error occured, item PICTURE was not changed" });
     }
 }
 
@@ -121,11 +121,11 @@ const modifyItem = async (req, res) => {
 
     try {
         const result = await updateItem(itemInfo);
-        res.send(result);
+        res.status(200).json({feed: result});
     }
     catch (err) {
         console.log(err);
-        res.json({ message: "Error occured, item was not changed" });
+        res.status(400).json({ message: "Error occured, item was not changed" });
     }
 }
 
@@ -133,11 +133,11 @@ const deleteGivenItem = async (req, res) => {
     const id = req.params.id;
     try {
         const result = await deleteItem(id);
-        res.send(result)
+        res.status(200).json({feed: result})
     }
     catch (err) {
         console.log(err);
-        res.json({ message: "Error occured, item was not deleted"})
+        res.status(400).json({ message: "Error occured, item was not deleted"})
     }
 }
 module.exports = { selectAllItems, selectItem, createNewItem, updateItemName, updateItemAmount, updateItemCategory, updateItemPrice, updateItemPicture, modifyItem, deleteGivenItem };

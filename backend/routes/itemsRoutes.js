@@ -7,19 +7,20 @@ const router = Router();
 // Get items for logged in user
 router.post('/items', authenticateToken, itemsControl.selectItem);
 
-// change to post or patch
-router.get('/create_item/:userID/:name/:amount/:category/:price/:picture', authenticateToken, itemsControl.createNewItem);
+// create quest
+router.post('/create_item/:userID/:name/:amount/:category/:price/:picture', authenticateToken, itemsControl.createNewItem);
 
-// change to patch
-router.get('/update/item_name/:id/:name', authenticateToken, itemsControl.updateItemName);
-router.get('/update/item_amount/:id/:amount', authenticateToken, itemsControl.updateItemAmount);
-router.get('/update/item_category/:id/:category', authenticateToken, itemsControl.updateItemCategory);
-router.get('/update/item_price/:id/:price', authenticateToken, itemsControl.updateItemPrice);
-router.get('/update/item_picture/:id/:picture', authenticateToken, itemsControl.updateItemPicture);
-router.get('/update/item/:itemID/:name/:amount/:category/:price/:picture', authenticateToken, itemsControl.modifyItem);
+// update request
+router.patch('/update/item_name/:id/:name', authenticateToken, itemsControl.updateItemName);
+router.patch('/update/item_amount/:id/:amount', authenticateToken, itemsControl.updateItemAmount);
+router.patch('/update/item_category/:id/:category', authenticateToken, itemsControl.updateItemCategory);
+router.patch('/update/item_price/:id/:price', authenticateToken, itemsControl.updateItemPrice);
+router.patch('/update/item_picture/:id/:picture', authenticateToken, itemsControl.updateItemPicture);
 
-// change to delete
-router.get('/delete/:id', authenticateToken, itemsControl.deleteGivenItem);
+router.put('/update/item/:itemID/:name/:amount/:category/:price/:picture', authenticateToken, itemsControl.modifyItem);
+
+// delete request
+router.delete('/delete/:id', authenticateToken, itemsControl.deleteGivenItem);
 
 module.exports = router;
 
