@@ -25,3 +25,7 @@ router.get('/logout', profileController.logoffUser);
 
 
 module.exports = router;
+
+Logins:
+    Email: someEmail@gmail.com, Password: soft2002
+    Email: someEmail2@gmail.com, Password: firm2002

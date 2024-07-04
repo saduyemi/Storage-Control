@@ -45,7 +45,7 @@ async function logout() {
     const feedback = await fetch('http://localhost:3000/logout', options);
     const js = await feedback.json();
 
-    localStorage.removeItem("user"); 
+    //if (localStorage.user) { localStorage.removeItem("user"); } 
     console.log(js);
 }
 

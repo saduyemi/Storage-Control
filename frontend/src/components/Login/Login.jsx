@@ -33,6 +33,7 @@ export default function Login() {
             const response = await fetch("http://localhost:3000/login", options);
             data = await response.json();
             console.log(data);
+            //if (localStorage.user) { localStorage.removeItem("user");}
             localStorage.user = data.userEmail;
             navigate("/home");
         }

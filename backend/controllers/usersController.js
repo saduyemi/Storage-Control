@@ -1,4 +1,4 @@
-const { getProfiles, getProfileByEmail, createUser, deleteUser } = require('../models/profiles');
+const { getProfiles, getProfileByEmail, createUser, deleteUser, changePassword } = require('../models/profiles');
 const { createToken } = require('./authentication');
 
 const selectAllUsers = async (req, res) => {
@@ -87,4 +87,16 @@ const login_server = async (req, res) => {
         res.status(404).json({message: err});
     } 
 }
-module.exports = { selectAllUsers, login_valid, createuser_post, checkUser_get, delete_post, logoffUser, login_server };
+
+const changepassword_server = async (req, res) => {
+    const userInfo = {email: req.params.email, password: req.params.password};
+
+    try {
+        const feedback = await changePassword(userInfo);
+        res.status(200).json({message: "Password Changed", feed: feedback});
+    }
+    catch (err) {
+        res.status(400).json({message: err});
+    }
+}
+module.exports = { selectAllUsers, login_valid, createuser_post, checkUser_get, delete_post, logoffUser, login_server, changepassword_server };

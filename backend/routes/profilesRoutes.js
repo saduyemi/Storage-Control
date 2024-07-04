@@ -20,5 +20,6 @@ router.post('/isvalid', authenticateToken, (req, res) => {
     res.status(200).json({ message: "User is logged in" });
 }); // Note if want to check cookies from a frontend application, have to make the request post and in options credentials: "include"
 
+router.get('/changepassword/:email/:password', profileController.changepassword_server);
 
 module.exports = router;

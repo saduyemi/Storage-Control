@@ -8,7 +8,7 @@ async function createUser(userInfo) {
     }
 
     const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(userInfo.password, salt); // increase size of password to 255
+    const hashedPassword = await bcrypt.hash(userInfo.password, salt); // increase size of password to 255 Done
     
     try {
         let [ rows ] = await sqlConn.query(`
@@ -59,7 +59,26 @@ async function getProfileByEmail(userInfo) {
 } 
 
 async function changeUsername(userInfo) {}
-async function changePassword(userInfo) {}
+
+async function changePassword(userInfo) {
+    console.log("HERE");
+    try {
+        const salt = await bcrypt.genSalt();
+        const hashedPassword = await bcrypt.hash(userInfo.password, salt);
+        
+        const feedback = await sqlConn.query(`
+            UPDATE Profiles
+            SET Password = ?
+            WHERE Email = ?
+        `, [hashedPassword, userInfo.email]);
+
+        return feedback;
+    }
+
+    catch (err) {
+        throw(err);
+    }
+}
 
 async function deleteUser(userID) { 
     let feedback = await sqlConn.query(`
@@ -70,4 +89,5 @@ async function deleteUser(userID) {
     // also delete items in Items Table with the corresponding userID
 }
 
-module.exports = { getProfiles, getProfileByEmail, createUser, deleteUser };
+
+module.exports = { getProfiles, getProfileByEmail, createUser, deleteUser, changePassword };
