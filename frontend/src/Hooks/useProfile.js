@@ -4,6 +4,9 @@ function getUser() {
     if (!localStorage.user) { return null; } // no need for logging statements it doesn't work if it's on same page, but the even handler still works though
     const text = localStorage.getItem('user');
     //const obj = (text) ? JSON.parse(text) : null; // have to put in tenary in order for parse to work (in TS) and this should be used with objects so far the text variable is just a string so this is not needed
+    
+    console.log(`User changed to ${text}`)
+
     return text;
 }
 

@@ -45,7 +45,7 @@ async function logout() {
     const feedback = await fetch('http://localhost:3000/logout', options);
     const js = await feedback.json();
 
-    if (localStorage.user) { localStorage.removeItem("user"); } 
+    //if (localStorage.user) { localStorage.removeItem("user"); } 
     console.log(js);
 }
 
@@ -53,8 +53,7 @@ export default function Home() {
     const { user } = useContext(LoginContext);
     const navigate = useNavigate();
     
-    const isAuthorized = useAuth(); 
-    //console.log(localStorage.getItem("user"))
+    const isAuthorized = useAuth();
 
     // included "&& user" so that screen is rendered when user value is ready after logging in, cause sometimes localstorage is stil being updated but the screen component renders while localstorage is being updated
     if (isAuthorized && user) {
@@ -69,7 +68,6 @@ export default function Home() {
                 <button onClick={(e) => { checkAuth(); }}>Checker</button>
                 <button onClick={(e) => { getItems(); }}>Items</button>
                 <button onClick={(e) => { logout(); navigate('/login'); }}>Sign Out</button>
-                <button onClick={(e) => { navigate('/input') }}>New Item</button>
             </>
         );
     }

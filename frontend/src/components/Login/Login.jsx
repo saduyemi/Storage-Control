@@ -33,12 +33,14 @@ export default function Login() {
             const response = await fetch("http://localhost:3000/login", options);
             data = await response.json();
             console.log(data);
-            //if (localStorage.user) { localStorage.removeItem("user");}
+
             localStorage.user = data.userEmail;
+            window.dispatchEvent( new Event('storage')); // include this so useProfile hook knows to change user based adding new value to user on current tab
+
             navigate("/home");
         }
         catch(err) {
-            if (localStorage.user) { localStorage.removeItem(user); }
+            if (localStorage.user) { localStorage.removeItem(user); window.dispatchEvent( new Event('storage'));}
             console.log(err);
             navigate("/login");
         }

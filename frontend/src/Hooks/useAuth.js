@@ -22,7 +22,7 @@ async function isAuthenticated() {
 export function useAuth() {
     const navigate = useNavigate();
     const [checked, setChecked] = useState(false);
-    const { user } = useContext(LoginContext);
+    //const { user } = useContext(LoginContext);
     
     useEffect(() => {
         const checkAuth = async () => {
@@ -41,7 +41,7 @@ export function useAuth() {
                     if (localStorage.user) { localStorage.removeItem("user"); } 
                     navigate('/login'); 
                 }
-                else { setChecked(true); }
+                else { console.log("User Authenticated"); setChecked(true); }
             }
             catch(err) {
                 navigate('/login');
@@ -55,6 +55,6 @@ export function useAuth() {
         checkAuth();
     }, []); // Once a component that the hook is in renders check if user is authenticated before moving foward
 
-    console.log("User Authenticated"); 
+    //console.log("User Authenticated"); 
     return checked;
 }

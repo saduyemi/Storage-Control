@@ -45,7 +45,7 @@ function App() {
             <Route path='/home' element={<Home/>} />
             <Route path='/catalog' element={<Catalog/>} />
             <Route path='/search' element={<Search/>} />
-            <Route path='/insert' element={<InputForm/>} />
+            <Route path='/input' element={<InputForm/>} />
             <Route path='/print' element={<Print/>} />
 
           </Routes>
