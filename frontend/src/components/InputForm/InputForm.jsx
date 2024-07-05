@@ -42,23 +42,17 @@ export default function InputForm() {
     const [state, dispatch] = useReducer(reducer, itemTemplate);
     const [imageurl, setURL] = useState("");
 
-    function blobToImage(blob) {
-        console.log("Converting....");
-        const url = URL.createObjectURL(blob);
-            
-        //URL.revokeObjectURL(url);
-        //setURL(url);
-    }
 
     async function handleSubmit(e) {
         e.preventDefault();
 
-        
-        console.log(state.file, state.file.type);
-        const blob = toBlob(state.file);
-
-        //blobToImage(blob);  
-        
+        console.log(state);
+        fileToUri(state.file)
+            .then(dataUri => {
+                setURL(dataUri);
+                console.log(dataUri);
+            })
+            
         
     }
 
@@ -97,7 +91,15 @@ export default function InputForm() {
                     </form>
                 </div>
 
-                {(imageurl) ? <p>Image</p> : <></>}
+                {(imageurl) 
+                    ? 
+                    <>
+                        <p>Image</p> 
+                        <img src={imageurl} />
+                    </>
+                    : 
+                    <></>
+                }
             </>
         );
     }
@@ -108,37 +110,12 @@ export default function InputForm() {
     }
 }
 
-function toBlob(file) {
-    let reader = new FileReader();
-
-    // action to start once file reader has finished reading a file
-    reader.onloadend = (e) => {
-        let arrayBuffer = e.target.value;
-        let blob = arrayBufferToBlob(arrayBuffer, 'image/jpeg');
-        console.log(`Blob is ${blob}, Size is ${blob.size}, Type is ${blob.type}`);
-        console.log(blob);
-        return blob;
-    }
-
-    reader.readAsArrayBuffer(file);
+function fileToUri(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            resolve(e.target.result);
+        };
+        reader.readAsDataURL(file);
+    })
 }
-
-function toBlob2(file) {
-    return new Promise(function(resolve, reject) {
-        console.log("Attempting");
-
-        try {
-            let blob = toBlob(file);
-            resolve(blob);
-        }
-        catch(err) {
-            reject(err);
-        }
-    });
-}
-/*async function blobToImage(blob) {
-    const url = URL.createObjectURL(blob);
-        
-    URL.revokeObjectURL(url);
-    setURL(url);
-}*/
