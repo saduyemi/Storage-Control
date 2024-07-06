@@ -79,7 +79,6 @@ export default function InputForm() {
     if (isAuthorized) { 
         return (
             <>
-                <p>Implement InputForm</p>
                 <div id='inputContainer'>
                     <form id='itemForm'>
                         <div className='inputTypes'>

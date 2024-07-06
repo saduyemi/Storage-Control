@@ -60,17 +60,18 @@ export default function Home() {
     if (isAuthorized && user) {
         return (
             <>
-                <br/>
-                <p>Implement Home</p>
-                <br/>
-                <p>Welcome {(user) ? user : "Not Logged In"} </p>
-                <br/>
+                <div id='homeContainer'>
+                    <br/>
+                    <br/>
+                    <p>Welcome {(user) ? user : "Not Logged In"} </p>
+                    <br/>
 
-                <button onClick={(e) => { checkAuth(); }}>Checker</button>
-                <button onClick={(e) => { getItems(); }}>Items</button>
-                <button onClick={(e) => { logout(); navigate('/login'); }}>Sign Out</button>
-                <button onClick={(e) => { navigate('/input') }}>New Item</button>
-                <button onClick={(e) => { navigate('/catalog')}}>View Items</button>
+                    <button onClick={(e) => { checkAuth(); }}>Checker</button>
+                    <button onClick={(e) => { getItems(); }}>Items</button>
+                    <button onClick={(e) => { logout(); navigate('/login'); }}>Sign Out</button>
+                    <button onClick={(e) => { navigate('/input') }}>New Item</button>
+                    <button onClick={(e) => { navigate('/catalog')}}>View Items</button>
+                </div>
             </>
         );
     }

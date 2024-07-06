@@ -14,7 +14,7 @@
 #navbar > ul > li {
     border: 0.5px solid lightgray;
     border-radius: 2px;
-    padding: 15% 8%;
+    padding: 10% 8%;
     width: 100%;
     overflow: hidden;
 }

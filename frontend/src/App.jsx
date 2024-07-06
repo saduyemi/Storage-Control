@@ -23,6 +23,8 @@ function App() {
 
   const user = useProfile(); // with this hook, user will be updated based on it's prescence in localStorage
 
+  const navbar = (user) ? <Navbar /> : <></>; // Navbar will show depending on whether user is logged in
+
   useEffect(() => {
     if (user) {
       console.log("Fetching Data......");
@@ -57,7 +59,7 @@ function App() {
     <>
       <LoginContext.Provider value={{user, items, loaded}}>
         <Router>
-          <Navbar />
+          {navbar}
           <Routes>
             <Route path='/login' element={<Login/>} />
             <Route path='/signup' element={<Signup/>} />

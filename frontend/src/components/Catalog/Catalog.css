@@ -1,13 +1,17 @@
 #itemsContainter {
+    width: 85%;
+    height: 97%;
+
     display: flex;
     justify-content: center;
     border: 1px dashed black;
-    width: 85%;
-    height: 97%;
     margin-left: 15%;
 }
 
 #itemsContainter > ul {
+    width: 100%;
+    height: min-content;
+    
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -15,18 +19,18 @@
     row-gap: 15px;*/
     row-gap: 15px;
     list-style-type: none;
-    width: 100%;
-    height: min-content;
+    
     border: 1px solid green;
 
 }
 
 .items {
+    width: 170px;
+    height: 190px; /*Have to give fixed height because specifed min-content for ul tag */
+    
     background-color: white;
     border: 0.5px solid black;
     border-radius: 5px;
-    width: 170px;
-    height: 190px;
 
     overflow: hidden;
     text-align: center;
@@ -44,6 +48,6 @@
 }
 
 .items > button {
-    margin-left: 15%;
     display: inline-block;
+    padding: 5px;
 }

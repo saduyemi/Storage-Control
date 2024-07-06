@@ -13,14 +13,13 @@ export default function Catalog() {
     if (isAuthorized && items) {
         return (
             <>
-                <p style={{textAlign: 'center'}}>Implement Catalog</p>
                 <div id='itemsContainter'>
                     <ul>
                         {items.map((anItem) => (
                             <li key={anItem.ItemID}>
                                 <div className='items'>
-                                    <button>D</button>
-                                    <button>E</button>
+                                    <button style={{marginLeft: '45%'}}>D</button>
+                                    <button style={{marginLeft: '15%'}}>E</button>
                                     <img src={anItem.ItemPicture} />
                                     <p>{anItem.ItemName}</p>
                                     <p>{`Amount: ${anItem.ItemAmount} `}</p>

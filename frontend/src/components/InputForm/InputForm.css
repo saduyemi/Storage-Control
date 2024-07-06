@@ -1,10 +1,11 @@
 #inputContainer {
+    width: 85%;
+    height: 100%;
+
     border: 1px solid black;
     border-radius: 5px;
-    max-width: 700px;
-    width: 75%;
     margin: auto;
-    height: min-content;
+    margin-left: 15%;
     padding: 1%;
 }
 
@@ -27,6 +28,10 @@
     border-radius: 4.5px;
     width: 50%;
     height: 25px;
+}
+
+#itemForm > button {
+    padding: 5px;
 }
 
 
