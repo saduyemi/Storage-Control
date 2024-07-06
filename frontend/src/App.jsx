@@ -18,18 +18,39 @@ import { BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 export const LoginContext = createContext(null);
 
 function App() {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(null);
   const [loaded, setLoaded] = useState(false);
 
   const user = useProfile(); // with this hook, user will be updated based on it's prescence in localStorage
 
   useEffect(() => {
     if (user) {
-      //console.log("Fetching Data......");
+      console.log("Fetching Data......");
+
+      const options = {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        credentials: "include",
+      };
+
+    fetch("http://localhost:3000/items", options)
+      .then((result) => {
+        result.json()
+          .then(data => {
+            console.log(`Fetched Data`, data);
+            setItems(data.result);
+            setLoaded(true);
+          })
+      })
+      .catch((err) => {
+        console.log(err);
+      })
 
     }
-
-  }, []); // Fetch data here, so whenever program starts it has data to be used //TODO
+    else {
+      console.log("User Is Not Authenticated Not Fetching Data");
+    }
+  }, [user]); // Fetch data here, so whenever program starts it has data to be used //TODO
 
   // make path '/' element a conditional render where it's either login or home based on whether or not user has jwt token
   return (
@@ -43,7 +64,7 @@ function App() {
 
             <Route path='/' element={<Home/>} />
             <Route path='/home' element={<Home/>} />
-            <Route path='/catalog' element={<Catalog/>} />
+            <Route path='/catalog' element={<Catalog />} />
             <Route path='/search' element={<Search/>} />
             <Route path='/input' element={<InputForm/>} />
             <Route path='/print' element={<Print/>} />

@@ -15,3 +15,7 @@ button {
     margin-left: 10px;
     padding: 5px
 }
+
+nav {
+    float: left;
+}

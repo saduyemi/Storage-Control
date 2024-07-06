@@ -51,7 +51,7 @@ export default function Login() {
             <div className='loginContainer'>
                 <form className='loginForm' onSubmit={(e) => handleSubmit(e)}>
                     <label htmlFor='email'> Email: </label>
-                    <input type='email' id='email' className='emailField' placeholder='Enter Email' onChange={(e) => { setEmail(e.target.value); }} />
+                    <input type='email' id='email' className='emailField' placeholder='Enter Email' onChange={(e) => { setEmail(e.target.value); }} autoComplete='on'/>
                     
                     <br/>
                     

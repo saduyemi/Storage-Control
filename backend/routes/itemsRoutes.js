@@ -7,8 +7,8 @@ const router = Router();
 // Get items for logged in user
 router.post('/items', authenticateToken, itemsControl.selectItem);
 
-// create quest
-router.post('/create_item/:userID/:name/:amount/:category/:price/:picture', authenticateToken, itemsControl.createNewItem);
+// create request
+router.post('/create_item', authenticateToken, itemsControl.createNewItem);
 
 // update request
 router.patch('/update/item_name/:id/:name', authenticateToken, itemsControl.updateItemName);

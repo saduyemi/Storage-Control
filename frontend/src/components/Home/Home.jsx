@@ -70,6 +70,7 @@ export default function Home() {
                 <button onClick={(e) => { getItems(); }}>Items</button>
                 <button onClick={(e) => { logout(); navigate('/login'); }}>Sign Out</button>
                 <button onClick={(e) => { navigate('/input') }}>New Item</button>
+                <button onClick={(e) => { navigate('/catalog')}}>View Items</button>
             </>
         );
     }

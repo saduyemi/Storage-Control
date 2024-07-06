@@ -51,6 +51,26 @@ export default function InputForm() {
             .then(dataUri => {
                 setURL(dataUri);
                 console.log(dataUri);
+                
+                const data = {
+                    name: state.name,
+                    amount: state.amount,
+                    category: state.category,
+                    price: state.price,
+                    picture: dataUri
+                };
+
+                const options = {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    credentials: "include",
+                    body: JSON.stringify(data)
+                }
+
+                fetch("http://localhost:3000/create_item", options)
+                    .then(result => { result.json(); })
+                    .then(feedback => console.log(feedback))
+                    .catch(err => console.log(err));
             })
             
         
@@ -119,3 +139,52 @@ function fileToUri(file) {
         reader.readAsDataURL(file);
     })
 }
+
+function base64ToBlob(base, contentType, sliceSize=512) {
+    const byteChars = atob(base);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteChars.length; offset += sliceSize) {
+        const slice = byteChars.slice(offset, offset + sliceSize);
+
+        const byteNumbers = new Array(slice.length);
+        for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        const byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+        const blob = new Blob(byteArrays, {type: contentType});
+
+        return blob;
+    }
+}
+
+function blobToBase64(blob) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onloadend = (e) => {
+            resolve(e.target.result);
+        }
+
+        reader.readAsDataURL(blob);
+    })
+}
+/*
+function blobToBase64(blob) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.readAsArrayBuffer(blob);
+
+        reader.onloadend = (e) => {
+            // obtaining array buffer
+            let buffer = reader.result;
+
+            // converting arraybuffer to base64 string
+            let base64data = btoa(String.fromCharCode.apply(null, new Uint8Array(buffer)));
+        }
+    })
+}
+*/

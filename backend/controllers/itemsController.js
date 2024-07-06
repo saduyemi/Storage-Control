@@ -21,12 +21,12 @@ const selectItem = async (req, res) => {
 
 const createNewItem = async (req, res) => {
     const newItem = { 
-        userID: req.params.userID, 
-        name: req.params.name,
-        amount: req.params.amount, 
-        category: req.params.category, 
-        price: req.params.price, 
-        picture: req.params.picture 
+        userID: req.userID, 
+        name: req.body.name,
+        amount: req.body.amount, 
+        category: req.body.category, 
+        price: req.body.price, 
+        picture: req.body.picture 
     };
 
     try {

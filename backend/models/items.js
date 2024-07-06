@@ -32,8 +32,8 @@ async function createItem(itemInfo) {
         const { userID, name, amount, category, price, picture } = itemInfo;
         
         const feedback = sqlConn.query(`
-            INSERT INTO Items (UserID, ItemName, ItemAmount, ItemCategory, ItemPrice)
-            VALUES (?, ?, ?, ?, ?)    
+            INSERT INTO Items (UserID, ItemName, ItemAmount, ItemCategory, ItemPrice, ItemPicture)
+            VALUES (?, ?, ?, ?, ?, ?)    
         `, [userID, name, amount, category, price, picture]);
 
         return feedback;
