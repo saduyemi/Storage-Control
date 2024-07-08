@@ -15,7 +15,7 @@ const selectAllUsers = async (req, res) => {
 
 // include
 const createuser_post = async (req, res) => {
-    const userInfo = {email: req.params.email, password: req.params.password};
+    const userInfo = {email: req.body.email, password: req.body.password};
     
     try {
         const user = await createUser(userInfo);

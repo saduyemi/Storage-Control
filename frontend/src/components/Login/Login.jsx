@@ -60,6 +60,8 @@ export default function Login() {
                     
                     <br/>
                     <button className='loginBtn'> Login </button>
+                    <button className='signBtn' onClick={ () => navigate('/signup')} > Sign Up</button>
+
                 </form>
             </div>
         </>

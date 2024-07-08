@@ -9,7 +9,7 @@ router.post('/login', profileController.login_valid);
 router.post('/logout', profileController.logoffUser);
 
 // Create Account
-router.post('/create/:email/:password', profileController.createuser_post); // keep, but change to post
+router.post('/create_user', profileController.createuser_post); // keep, but change to post
 
 // Delete Account
 router.delete('/delete/:id', profileController.delete_post);

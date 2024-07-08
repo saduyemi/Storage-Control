@@ -12,11 +12,12 @@
 }
 
 #navbar > ul > li {
-    border: 0.5px solid lightgray;
-    border-radius: 2px;
-    padding: 10% 8%;
+    border: 0.5px none lightgray;
+    border-radius: 15px;
+    padding: 0.8rem; /* use rem instead of % for margin and padding*/
     width: 100%;
     overflow: hidden;
+    cursor: pointer;
 }
 
 #navbar > ul > li:hover {
@@ -25,4 +26,11 @@
 
 #navbar > ul > li > p {
     cursor: pointer;
+    display: inline-block;
+}
+
+.icons {
+    display: inline-block;
+    margin-right: 2.5px;
+    color: #604667;
 }

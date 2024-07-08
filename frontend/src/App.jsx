@@ -23,7 +23,7 @@ function App() {
 
   const user = useProfile(); // with this hook, user will be updated based on it's prescence in localStorage
 
-  const navbar = (user) ? <Navbar /> : <></>; // Navbar will show depending on whether user is logged in
+  const navbar = (user && user !== undefined) ? <Navbar /> : <></>; // Navbar will show depending on whether user is logged in
 
   useEffect(() => {
     if (user) {

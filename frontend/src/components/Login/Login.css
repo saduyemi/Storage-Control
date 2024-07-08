@@ -33,8 +33,24 @@
     border: 1px black none;
     border-radius: 5px;
     margin-top: 5%;
-    margin-left: 80%;
-    display: inline-block;
+    margin-left: 60%;
+    display: inline;
+    
+    width: 70px;
+    height: 40px;
+
+    background-color: skyblue;
+    color: white;
+    cursor: pointer;
+
+}
+
+.signBtn {
+    border: 1px black none;
+    border-radius: 5px;
+    margin-top: 5%;
+    margin-left: 5%;
+    display: inline;
     
     width: 70px;
     height: 40px;
@@ -43,6 +59,7 @@
     color: white;
     cursor: pointer;
 }
+
 .loginBtn:hover {
     color: skyblue;
 }

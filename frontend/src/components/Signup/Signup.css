@@ -1,0 +1,56 @@
+.signContainer {
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: auto;
+    margin-top: 10%;
+    width: 75%;
+    height: 65%;
+
+    max-width: 700px;
+    max-height: 550px;
+}
+
+.signForm {
+    border: 1px none blue;
+    border-radius: 10px;
+    height: 100%;
+    width: 100%;
+    padding: 5%;
+}
+
+.newEmailField {
+    margin: 5% 0%;
+    height: 10%;
+    width: 75%;
+}
+
+.newPasswordField {
+    margin: 5% 0%;
+    height: 10%;
+    width: 75%;
+}
+
+.errors  {
+    color: blue;
+    margin: 0;
+}
+
+#createBtn {
+    float: right;
+
+    border: 1px black none;
+    border-radius: 5px;
+    margin-top: 5%;
+    display: inline;
+    
+    width: 70px;
+    height: 40px;
+
+    background-color: skyblue;
+    color: white;
+    cursor: pointer;
+}
+
+#createBtn:hover {
+    color: skyblue;
+}

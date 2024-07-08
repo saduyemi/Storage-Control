@@ -1,11 +1,14 @@
-import { useState, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import './Navbar.css'
 
 import { LoginContext } from '../../App';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHouse, faKeyboard, faMagnifyingGlass, faArrowRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons'
 
 export default function Navbar() {
     const navigate = useNavigate();
+    const [ username, setUsername] = useState(null);
 
     const { user } = useContext(LoginContext);
 
@@ -26,15 +29,22 @@ export default function Navbar() {
         navigate('/login');
     }
 
+    useEffect(() => {
+        if (user) { 
+            let name = localStorage.getItem('user');
+            setUsername(name.split('@')[0]); 
+        }
+    }, []);
+    
     return (
         <>
             <div id='navbar'>
                 <ul>
-                    <li><p>{(user) ? user : "Null" }</p></li>
-                    <li><p onClick={() => navigate('/home')}>Home</p></li>
-                    <li><p onClick={() => navigate('/input')}>Input</p></li>
-                    <li><p onClick={() => navigate('/catalog')}>View</p></li>
-                    <li onClick={() => { logout(); }}><p>Sign Out</p></li>
+                    <li><FontAwesomeIcon icon={faUser} className='icons' /><p>{(username) ? username : "Null" }</p></li>
+                    <li onClick={() => navigate('/home')}><FontAwesomeIcon icon={faHouse} style={{color: "#606467", }} /> <p>Home</p></li>
+                    <li onClick={() => navigate('/input')}><FontAwesomeIcon icon={faKeyboard} className='icons' /><p>Input</p></li>
+                    <li onClick={() => navigate('/catalog')}><FontAwesomeIcon icon={faMagnifyingGlass} className='icons'/><p>View</p></li>
+                    <li style={{marginTop: '25rem'}} onClick={() => { logout(); }}><FontAwesomeIcon icon={faArrowRightFromBracket} className='icons'/><p>Sign Out</p></li>
                 </ul>
             </div>
         </>

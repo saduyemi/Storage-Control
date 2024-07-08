@@ -34,7 +34,15 @@ export default function Catalog() {
             </>
         );
     }
-
+    else if (isAuthorized) {
+        return (
+            <>
+                <div style={{marginLeft: '15%', paddingTop: '15rem'}}>
+                <p style={{textAlign: 'center'}}>Empty Storage</p>  
+                </div>
+            </>
+        );
+    }
     else {
         return (
             <>

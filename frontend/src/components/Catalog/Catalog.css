@@ -1,11 +1,12 @@
 #itemsContainter {
     width: 85%;
-    height: 97%;
+    height: 100%;
 
     display: flex;
     justify-content: center;
     border: 1px dashed black;
     margin-left: 15%;
+    padding-top: 4rem;
 }
 
 #itemsContainter > ul {
@@ -20,7 +21,7 @@
     row-gap: 15px;
     list-style-type: none;
     
-    border: 1px solid green;
+    /*border: 1px solid green;*/
 
 }
 
