@@ -10,3 +10,15 @@
     margin-left: 10px;
     padding: 10px;
 }
+
+#summary {
+    width: 55%; max-width: 320px;
+    height: 55%;
+    border: 2px solid #606467;
+    border-radius: 10px;
+
+    margin: auto;
+    padding: 1rem;
+
+    box-shadow: 10px 10px 10px #9D9D9D;
+}

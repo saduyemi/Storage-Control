@@ -66,11 +66,9 @@ export default function Home() {
                     <p>Welcome {(user) ? user : "Not Logged In"} </p>
                     <br/>
 
-                    <button onClick={(e) => { checkAuth(); }}>Checker</button>
-                    <button onClick={(e) => { getItems(); }}>Items</button>
-                    <button onClick={(e) => { logout(); navigate('/login'); }}>Sign Out</button>
-                    <button onClick={(e) => { navigate('/input') }}>New Item</button>
-                    <button onClick={(e) => { navigate('/catalog')}}>View Items</button>
+                    <div id='summary'>
+                        <p>Total Items</p>
+                    </div>
                 </div>
             </>
         );

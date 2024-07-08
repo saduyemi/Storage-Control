@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext } from 'react'
-import './Home.css'
 import { LoginContext } from '../../App'
 import { useAuth } from '../../Hooks/useAuth'; // could also put this hook in a context hook and just access it within component instead of importing
 import { useNavigate } from 'react-router-dom';
@@ -49,7 +48,7 @@ async function logout() {
     console.log(js);
 }
 
-export default function Home() {
+export default function TestingComp() {
     const { user } = useContext(LoginContext);
     const navigate = useNavigate();
     
@@ -60,14 +59,15 @@ export default function Home() {
         return (
             <>
                 <br/>
-                <p>Implement Home</p>
                 <br/>
                 <p>Welcome {(user) ? user : "Not Logged In"} </p>
                 <br/>
 
                 <button onClick={(e) => { checkAuth(); }}>Checker</button>
-                <button onClick={(e) => { getItems(); }}>Items</button>
-                <button onClick={(e) => { logout(); navigate('/login'); }}>Sign Out</button>
+                    <button onClick={(e) => { getItems(); }}>Items</button>
+                    <button onClick={(e) => { logout(); navigate('/login'); }}>Sign Out</button>
+                    <button onClick={(e) => { navigate('/input') }}>New Item</button>
+                    <button onClick={(e) => { navigate('/catalog')}}>View Items</button>
             </>
         );
     }

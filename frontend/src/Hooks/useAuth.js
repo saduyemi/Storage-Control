@@ -38,7 +38,7 @@ export function useAuth() {
             
                 console.log(data.message);
                 if (data.message === "JWT Does Not Exist" || data.message === "Tampered") { 
-                    if (localStorage.user) { localStorage.removeItem("user"); } 
+                    if (localStorage.user) { localStorage.removeItem("user"); window.dispatchEvent( new Event('storage'));} // Note: might have to remove dispatch over here if it's causing long loading
                     navigate('/login'); 
                 }
                 else { console.log("User Authenticated"); setChecked(true); }

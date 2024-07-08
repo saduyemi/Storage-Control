@@ -42,6 +42,7 @@ export default function InputForm() {
     const [state, dispatch] = useReducer(reducer, itemTemplate);
     const [imageurl, setURL] = useState("");
 
+    const navigate = useNavigate();
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -68,9 +69,16 @@ export default function InputForm() {
                 }
 
                 fetch("http://localhost:3000/create_item", options)
-                    .then(result => { result.json(); })
-                    .then(feedback => console.log(feedback))
-                    .catch(err => console.log(err));
+                    .then(result => result.json()
+                        .then(feedback => { 
+                            console.log(feedback);
+                            navigate('/catalog');
+                        })
+                    )
+                    .catch(err => { 
+                        console.log(err);
+                        navigate('/home');
+                    });
             })
             
         

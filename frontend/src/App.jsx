@@ -54,6 +54,23 @@ function App() {
     }
   }, [user]); // Fetch data here, so whenever program starts it has data to be used //TODO
 
+  async function refreshItems() {
+    const options = {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      credentials: "include",
+    };
+
+    try { 
+      const result = await fetch("http://localhost:3000/items", options);
+      const data = await result.json();
+      setItems(data.result);
+    }
+    catch (err) {
+      console.log(err);
+      setItems(null);
+    }
+  }
   // make path '/' element a conditional render where it's either login or home based on whether or not user has jwt token
   return (
     <>

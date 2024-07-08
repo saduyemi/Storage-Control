@@ -28,10 +28,10 @@
     width: 170px;
     height: 190px; /*Have to give fixed height because specifed min-content for ul tag */
     
-    background-color: white;
+    background-color: #f3f3f3;
     border: 0.5px solid black;
     border-radius: 5px;
-
+    box-shadow: 10px 10px 10px #9D9D9D;
     overflow: hidden;
     text-align: center;
 }
