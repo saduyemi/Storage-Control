@@ -29,3 +29,24 @@ module.exports = router;
 Logins:
     Email: someEmail@gmail.com, Password: soft2002
     Email: someEmail2@gmail.com, Password: firm2002
+
+    function resizeFile(file) {
+    return new Promise((resolve) => {
+            Resizer.imageFileResizer(
+                file, // file
+                700, // maxHeight
+                700, // maxWidth
+                "JPEG",
+                100, // minHeight
+                100, // minWidth
+                (uri) => { console.log(uri); resolve(uri); },
+                "base64" //"blob" // could also be "base64", but made database accept blob type
+            );
+        });
+}
+
+async function prepFile(file) {
+        resizeFile(file)
+            .then(result => console.log(result))
+            .catch(err => console.log(err))
+}

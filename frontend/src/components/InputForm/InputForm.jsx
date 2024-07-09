@@ -1,10 +1,12 @@
-import { useReducer, useState } from 'react'
+import { useContext, useReducer, useState } from 'react'
 import './InputForm.css'
 import { LoginContext } from '../../App'
 import { useAuth } from '../../Hooks/useAuth'; // could also put this hook in a context hook and just access it within component instead of importing
 import { useNavigate } from 'react-router-dom';
-import { arrayBufferToBlob, blobToBase64String } from 'blob-util';
+import { base64StringToBlob } from 'blob-util'
 
+//import { arrayBufferToBlob, blobToBase64String } from 'blob-util';
+import Resizer from 'react-image-file-resizer';
 const itemTemplate = {
     name: "",
     amount: 0,
@@ -28,7 +30,7 @@ function reducer(state, action) {
             return {...state, price: action.value};
         
         case "file_change":
-            console.log(`File changed to ${action.value}`)
+            //console.log(`File changed to ${action.value}`)
             return {...state, file: action.value}; // Note only want to accept just one file
 
         default:
@@ -36,51 +38,74 @@ function reducer(state, action) {
     }
 }
 
+async function resizeFileOriginal(file) {
+    return new Promise((resolve) => {
+        Resizer.imageFileResizer(file, 250, 250, 'JPEG', 100, 0, uri => { resolve(uri)}, 'base64');
+    });
+} 
+
+async function resizeFile(file, fileType) {
+    return new Promise((resolve) => {
+        Resizer.imageFileResizer(file, 250, 250, fileType, 100, 0, uri => { resolve(uri)}, 'base64');
+    });
+}
+
+
+
 export default function InputForm() {
     const isAuthorized = useAuth();
-    
+    const { refreshItems } = useContext(LoginContext);
+
     const [state, dispatch] = useReducer(reducer, itemTemplate);
     const [imageurl, setURL] = useState("");
 
     const navigate = useNavigate();
+    
+    async function handleFile(e) {
+        //Resizer.imageFileResizer(e.target.files[0], 300, 300, 'JPEG', 100, 0, uri => { setURL(uri)}, 'base64');
+        try {
+            const file = e.target.files[0];
+            let fileType = (file.type).split('/')[1]; fileType = fileType.toUpperCase(); console.log("Type", fileType);
+            const resized = await resizeFile(file, fileType);
+            console.log("Image", resized);
+            dispatch({type: "file_change", value: resized});
+            setURL(resized);
+        }
+        catch (err) {
+            console.log(err);
+        }
+
+    }
 
     async function handleSubmit(e) {
         e.preventDefault();
 
         console.log(state);
-        fileToUri(state.file)
-            .then(dataUri => {
-                setURL(dataUri);
-                console.log(dataUri);
-                
-                const data = {
-                    name: state.name,
-                    amount: state.amount,
-                    category: state.category,
-                    price: state.price,
-                    picture: dataUri
-                };
+        if (state.file === undefined) { 
+            console.log("??"); 
+            return; 
+        }
+        const properImageName = (state.file).split("base64,/")[1];
+        console.log(properImageName);
+        const blobImage = base64StringToBlob(properImageName); // Fix Converting base64 to blob
 
-                const options = {
-                    method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                    credentials: "include",
-                    body: JSON.stringify(data)
-                }
+        try {
+            const data = {
+                name: state.name,
+                amount: state.amount,
+                category: state.category,
+                price: state.price,
+                picture: blobImage
+            };
 
-                fetch("http://localhost:3000/create_item", options)
-                    .then(result => result.json()
-                        .then(feedback => { 
-                            console.log(feedback);
-                            navigate('/catalog');
-                        })
-                    )
-                    .catch(err => { 
-                        console.log(err);
-                        navigate('/home');
-                    });
-            })
-            
+            //const 
+            console.log("Sending this to server", data);
+
+        }
+        catch (err) {
+
+        }
+        
         
     }
 
@@ -111,7 +136,7 @@ export default function InputForm() {
                         
                         <div className='inputTypes'>
                             <label htmlFor='file' className='inputLabels'> Input a Valid JPEG or PNG: </label>
-                            <input type='file' id='file' accept='image/png, image/jpeg' onChange={(e) => {dispatch({type: "file_change", value: e.target.files[0]})}} /> 
+                            <input type='file' id='file' accept='image/png, image/jpeg' onChange={(e) => { handleFile(e); /* dispatch({type: "file_change", value: e.target.files[0]}); */}} /> 
                         </div> 
 
                         <button onClick={(e) => { handleSubmit(e); }}>Submit</button>                   

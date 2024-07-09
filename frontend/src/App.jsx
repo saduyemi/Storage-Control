@@ -74,7 +74,7 @@ function App() {
   // make path '/' element a conditional render where it's either login or home based on whether or not user has jwt token
   return (
     <>
-      <LoginContext.Provider value={{user, items, loaded}}>
+      <LoginContext.Provider value={{user, items, loaded, refreshItems}}>
         <Router>
           {navbar}
           <Routes>
