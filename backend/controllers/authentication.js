@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 
 dotenv.config();
-const maxAge = 900; // 15 minutes is 900 seconds
+const maxAge = 1200; // 15 minutes is 900 seconds, 20 minutes is 1200 seconds
 
 const createToken = (id) => {
     console.log(`Creating token for ${id}`);
@@ -24,7 +24,7 @@ const authenticateToken = (req, res, next) => {
                 res.send( { message: "Tampered"} ); 
             }
             else {
-                console.log(`User ID: ${decodedToken.id} Requested Data`);
+                //console.log(`User ID: ${decodedToken.id} Requested Data`);
                 req.userID = decodedToken.id; // create a new property for req named userID it'll store the value of id that is stored in payload
                 next();
             }

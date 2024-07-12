@@ -17,10 +17,10 @@ router.patch('/update/item_category/:id/:category', authenticateToken, itemsCont
 router.patch('/update/item_price/:id/:price', authenticateToken, itemsControl.updateItemPrice);
 router.patch('/update/item_picture/:id/:picture', authenticateToken, itemsControl.updateItemPicture);
 
-router.put('/update/item/:itemID/:name/:amount/:category/:price/:picture', authenticateToken, itemsControl.modifyItem);
+router.put('/update_item', authenticateToken, itemsControl.modifyItem);
 
 // delete request
-router.delete('/delete/:id', authenticateToken, itemsControl.deleteGivenItem);
+router.delete('/delete_item', authenticateToken, itemsControl.deleteGivenItem);
 
 module.exports = router;
 

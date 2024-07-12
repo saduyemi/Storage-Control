@@ -12,7 +12,8 @@ const itemTemplate = {
     amount: 0,
     category: "",
     price: 0.0,
-    file: null
+    file: null,
+    ftype: ""
 };
 
 function reducer(state, action) {
@@ -31,22 +32,17 @@ function reducer(state, action) {
         
         case "file_change":
             //console.log(`File changed to ${action.value}`)
-            return {...state, file: action.value}; // Note only want to accept just one file
+            return {...state, file: action.value, ftype: action.value.type}; // Note only want to accept just one file
 
         default:
             return state;
     }
 }
-
-async function resizeFileOriginal(file) {
-    return new Promise((resolve) => {
-        Resizer.imageFileResizer(file, 250, 250, 'JPEG', 100, 0, uri => { resolve(uri)}, 'base64');
-    });
-} 
+ 
 
 async function resizeFile(file, fileType) {
     return new Promise((resolve) => {
-        Resizer.imageFileResizer(file, 250, 250, fileType, 100, 0, uri => { resolve(uri)}, 'base64');
+        Resizer.imageFileResizer(file, 100, 100, fileType, 100, 0, uri => { resolve(uri)}, 'base64');
     });
 }
 
@@ -61,18 +57,26 @@ export default function InputForm() {
 
     const navigate = useNavigate();
     
-    async function handleFile(e) {
-        //Resizer.imageFileResizer(e.target.files[0], 300, 300, 'JPEG', 100, 0, uri => { setURL(uri)}, 'base64');
+    async function preview(file) {
         try {
-            const file = e.target.files[0];
             let fileType = (file.type).split('/')[1]; fileType = fileType.toUpperCase(); console.log("Type", fileType);
             const resized = await resizeFile(file, fileType);
             console.log("Image", resized);
-            dispatch({type: "file_change", value: resized});
-            setURL(resized);
+            setURL(resized);    
+        }
+        catch(err) {
+            console.log(err);
+        }
+    }
+    
+    async function handleFile(file) {
+        try {
+            let fileType = (file.type).split('/')[1]; fileType = fileType.toUpperCase(); console.log("Type", fileType);
+            const resized = await resizeFile(file, fileType);
+            return resized;
         }
         catch (err) {
-            console.log(err);
+            throw(err);
         }
 
     }
@@ -81,13 +85,15 @@ export default function InputForm() {
         e.preventDefault();
 
         console.log(state);
-        if (state.file === undefined) { 
-            console.log("??"); 
+        if (!state.name) { 
             return; 
         }
-        const properImageName = (state.file).split("base64,/")[1];
-        console.log(properImageName);
-        const blobImage = base64StringToBlob(properImageName); // Fix Converting base64 to blob
+
+        const shortenedURL = await handleFile(state.file);
+        
+        //const properImageName = (state.file).split("base64,/")[1]; move to backend
+        //console.log(properImageName);
+        //const blobImage = base64StringToBlob(properImageName); // Fix Converting base64 to blob
 
         try {
             const data = {
@@ -95,11 +101,21 @@ export default function InputForm() {
                 amount: state.amount,
                 category: state.category,
                 price: state.price,
-                picture: blobImage
+                picture: shortenedURL,
+                filetype: state.ftype
             };
 
-            //const 
-            console.log("Sending this to server", data);
+            const options = {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'},
+                credentials: 'include',
+                body: JSON.stringify(data)
+            };
+
+            const feed = await fetch('http://localhost:3000/create_item', options);
+            const feedback = await feed.json();
+
+            console.log(feedback); console.log(feedback.feedback.picture);
 
         }
         catch (err) {
@@ -136,7 +152,7 @@ export default function InputForm() {
                         
                         <div className='inputTypes'>
                             <label htmlFor='file' className='inputLabels'> Input a Valid JPEG or PNG: </label>
-                            <input type='file' id='file' accept='image/png, image/jpeg' onChange={(e) => { handleFile(e); /* dispatch({type: "file_change", value: e.target.files[0]}); */}} /> 
+                            <input type='file' id='file' accept='image/png, image/jpeg' onChange={(e) => { dispatch({type: "file_change", value: e.target.files[0]}); preview(e.target.files[0]); }} /> 
                         </div> 
 
                         <button onClick={(e) => { handleSubmit(e); }}>Submit</button>                   

@@ -1,4 +1,5 @@
 const sqlConn = require('./config');
+const {blobToBase64, base64ToArrayBuffer, arrayBufferToBase64} = require('../filesupport');
 
 async function getItems() {
     const [ rows ] = await sqlConn.query("SELECT * FROM Items");
@@ -12,6 +13,35 @@ async function getAllItemsForUser(id) {
 
     if (rows.length == 0) { throw({message: "Invalid ID"}); }
 
+    return rows;
+}
+
+async function getAllItemsForUser2(id) {
+    const [ rows ] = await sqlConn.query(`
+        SELECT * FROM Items 
+        WHERE UserID=?`,[id]);
+
+    if (rows.length == 0) { throw({message: "Invalid ID"}); }
+    
+    console.log(rows[7].ItemPicture);
+    for (let row of rows) {
+        if (row) {
+            console.log(row.ItemName);
+            if (row.ItemPicture) {
+                console.log("\tBuffer Picture");
+                let base64 = arrayBufferToBase64(row.Prepend, row.ItemPicture);
+                //console.log(base64);
+                row.ItemPicture = base64;
+            }
+            //let base64 = arrayBufferToBase64("", row.itemPicture);
+            //let string = row.Prepend + base64;
+            //row.ItemPicture = string;
+        }
+        else {
+            row.ItemPicture = null;
+        }
+    }
+    
     return rows;
 }
 
@@ -44,6 +74,29 @@ async function createItem(itemInfo) {
     }
 }
 
+// Create new item ver 2
+async function createItem2(itemInfo) {
+    try {
+        const { userID, name, amount, category, price, picture } = itemInfo;
+        
+        const result = base64ToArrayBuffer(picture);
+        //console.log("Buffer:", pictureBuffer);
+       // kconst back = arrayBufferToBase64(result.prepend, result.buffer);
+        //kconsole.log("String", back);
+        //kreturn { userID, name, amount, category, price, picture: back};
+
+        const feedback = sqlConn.query(`
+            INSERT INTO Items (UserID, ItemName, ItemAmount, ItemCategory, ItemPrice, ItemPicture, Prepend)
+            VALUES (?, ?, ?, ?, ?, ?, ?)    
+        `, [userID, name, amount, category, price, result.buffer, result.prepend]);
+
+        return feedback;
+    }
+
+    catch(err) {
+        throw(err);
+    }
+}
 
 // Update name 
 async function updateName(itemID, newName) {
@@ -146,6 +199,26 @@ async function updateItem(itemInfo) {
         throw(err);
     }
 }
+async function updateItem2(itemInfo) {
+    try {
+        let { itemID, name, amount, category, price, picture } = itemInfo;
+        let result; 
+
+        if (picture === 'null' || picture === 'NULL') { picture = null; result = null; }
+        else { result = base64ToArrayBuffer(picture); }
+
+        const feedback = sqlConn.query(`
+            UPDATE Items
+            SET ItemName = ?, ItemAmount = ?, ItemCategory = ?, ItemPrice = ?, ItemPicture = ?, Prepend = ?
+            WHERE ItemID = ?    
+        `, [name, amount, category, price, (picture) ? result.buffer : null, (picture) ? result.prepend : null, itemID]);
+
+        return feedback;
+    }
+    catch (err) {
+        throw(err);
+    }
+}
 
 // Delete item
 async function deleteItem(itemID) {
@@ -159,4 +232,4 @@ async function deleteItem(itemID) {
     }
 }
 
-module.exports = { getItems, getAllItemsForUser, createItem, updateName, updateAmount, updateCategory, updatePrice, updatePicture, updateItem, deleteItem }; 
+module.exports = { getItems, getAllItemsForUser, getAllItemsForUser2, createItem, createItem2, updateName, updateAmount, updateCategory, updatePrice, updatePicture, updateItem, updateItem2, deleteItem }; 

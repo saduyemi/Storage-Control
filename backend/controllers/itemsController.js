@@ -1,4 +1,4 @@
-const { getItems, getAllItemsForUser, createItem, updateName, updateAmount, updateCategory, updatePrice, updatePicture, updateItem, deleteItem } = require('../models/items');
+const { getItems, getAllItemsForUser, getAllItemsForUser2, createItem, createItem2, updateName, updateAmount, updateCategory, updatePrice, updatePicture, updateItem, updateItem2, deleteItem } = require('../models/items');
 
 
 const selectAllItems = async (req, res) => {
@@ -9,7 +9,7 @@ const selectAllItems = async (req, res) => {
 const selectItem = async (req, res) => {
     const id = Number(req.userID);
     try {
-        const rows = await getAllItemsForUser(id);
+        const rows = await getAllItemsForUser2(id);
         res.status(200).json({ result: rows });
     }
     catch (err) {
@@ -26,11 +26,12 @@ const createNewItem = async (req, res) => {
         amount: req.body.amount, 
         category: req.body.category, 
         price: req.body.price, 
-        picture: req.body.picture 
+        picture: req.body.picture, 
+        filetype: req.body.filetype
     };
 
     try {
-        const result = await createItem(newItem);
+        const result = await createItem2(newItem);
         res.status(201).json({feedback: result});
     }
     catch (err) {
@@ -111,17 +112,17 @@ const updateItemPicture = async (req, res) => {
 
 const modifyItem = async (req, res) => {
     const itemInfo = { 
-        itemID: req.params.itemID, 
-        name: req.params.name,
-        amount: req.params.amount, 
-        category: req.params.category, 
-        price: req.params.price, 
-        picture: req.params.picture 
+        itemID: req.body.itemID, 
+        name: req.body.name,
+        amount: req.body.amount, 
+        category: req.body.category, 
+        price: req.body.price, 
+        picture: req.body.picture 
     };
 
     try {
-        const result = await updateItem(itemInfo);
-        res.status(200).json({feed: result});
+        const result = await updateItem2(itemInfo);
+        res.status(200).json(itemInfo);
     }
     catch (err) {
         console.log(err);
@@ -130,7 +131,7 @@ const modifyItem = async (req, res) => {
 }
 
 const deleteGivenItem = async (req, res) => {
-    const id = req.params.id;
+    const id = req.body.id;
     try {
         const result = await deleteItem(id);
         res.status(200).json({feed: result})
