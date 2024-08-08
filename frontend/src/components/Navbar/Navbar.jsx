@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouse, faKeyboard, faMagnifyingGlass, faArrowRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons'
 
 export default function Navbar() {
+    
     const navigate = useNavigate();
     const [ username, setUsername] = useState(null);
 

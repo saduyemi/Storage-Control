@@ -23,7 +23,6 @@ async function getAllItemsForUser2(id) {
 
     if (rows.length == 0) { throw({message: "Invalid ID"}); }
     
-    console.log(rows[7].ItemPicture);
     for (let row of rows) {
         if (row) {
             console.log(row.ItemName);

@@ -33,7 +33,18 @@ async function getProfiles() {
     return rows;
 }
 
-async function getProfileByID(id) {}
+async function getProfileByID(id) {
+    try {
+        let [ row ] = await sqlConn.query(`
+            SELECT Email FROM Profiles
+            WHERE UserID=?`, [id]);
+        
+        return row[0].Email;
+    }
+    catch (err) {
+        throw({message: "User Not Found"});
+    }
+}
 
 // note await pauses the execution of the function until that line is finished
 async function getProfileByEmail(userInfo) {
@@ -90,4 +101,4 @@ async function deleteUser(userID) {
 }
 
 
-module.exports = { getProfiles, getProfileByEmail, createUser, deleteUser, changePassword };
+module.exports = { getProfiles, getProfileByEmail, getProfileByID, createUser, deleteUser, changePassword };

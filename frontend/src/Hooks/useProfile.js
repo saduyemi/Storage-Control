@@ -5,17 +5,17 @@ function getUser() {
     const text = localStorage.getItem('user');
     //const obj = (text) ? JSON.parse(text) : null; // have to put in tenary in order for parse to work (in TS) and this should be used with objects so far the text variable is just a string so this is not needed
     
-    console.log(`User changed to ${text}`)
+    //kconsole.log(`User changed to ${text}`)
 
     return text;
 }
 
 export function useProfile() {
     const [profile, setProfile] = useState(getUser());
-
+    
     useEffect(() => {
         function handleChangeStorage() {
-            setProfile(getUser());
+            setProfile(getUser()); console.log("!!");
         }
 
         window.addEventListener('storage', handleChangeStorage); // function is called whenever something happens in storage

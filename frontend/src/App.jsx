@@ -12,19 +12,23 @@ import InputForm from './components/InputForm/InputForm';
 import Print from './components/Print/Print';
 
 import { useProfile } from './Hooks/useProfile';
+import { useAuth } from './Hooks/useAuth';
+
 
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom'
+import { LoadingCircle } from './components/LoadingCircle/LoadingCircle';
 
 export const LoginContext = createContext(null);
 
 function App() {
   const [items, setItems] = useState(null);
   const [loaded, setLoaded] = useState(false);
+  
+  const isAuthorized = useAuth();
+  const user = useProfile();
 
-  const user = useProfile(); // with this hook, user will be updated based on it's prescence in localStorage
-
-  const navbar = (user && user !== undefined) ? <Navbar /> : <></>; // Navbar will show depending on whether user is logged in
-
+  let navbar; // Navbar will show depending on whether user is logged in
+  
   useEffect(() => {
     if (user) {
       console.log("Fetching Data......");
@@ -71,17 +75,35 @@ function App() {
       setItems(null);
     }
   }
+
   // make path '/' element a conditional render where it's either login or home based on whether or not user has jwt token
+  let defaultPath = <></>;
+
+  if (isAuthorized.completed || user) {
+    if (isAuthorized.checked || user) {
+      defaultPath = <Home/>;
+      navbar = <Navbar/>;
+    }
+    else {
+      defaultPath = <Login/>;
+      navbar = <></>;
+    }
+  }
+  else {
+    defaultPath = <LoadingCircle/>;
+    navbar = <></>;
+  } 
+
   return (
     <>
       <LoginContext.Provider value={{user, items, loaded, refreshItems}}>
         <Router>
-          {navbar}
+          {/*isAuthorized.completed && isAuthorized.checked &&*/ user && <Navbar/> }
           <Routes>
             <Route path='/login' element={<Login/>} />
             <Route path='/signup' element={<Signup/>} />
 
-            <Route path='/' element={<Home/>} />
+            <Route path='/' element={defaultPath} />
             <Route path='/home' element={<Home/>} />
             <Route path='/catalog' element={<Catalog />} />
             <Route path='/search' element={<Search/>} />

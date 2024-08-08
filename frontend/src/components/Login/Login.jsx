@@ -3,10 +3,10 @@ import './Login.css'
 import { LoginContext } from '../../App'
 
 import { useNavigate } from 'react-router-dom';
-
+import { useAuth } from '../../Hooks/useAuth';
 
 export default function Login() {
-    //const {user, setUser} = useContext(LoginContext);
+    const { user, setAuthorization } = useContext(LoginContext);
 
     const [userEmail, setEmail] = useState("");
     const [userPassword, setPassword] = useState("");
@@ -32,12 +32,12 @@ export default function Login() {
         try {
             const response = await fetch("http://localhost:3000/login", options);
             data = await response.json();
-            console.log(data);
+            console.log("Logging In", data);
 
             localStorage.user = data.userEmail;
             window.dispatchEvent( new Event('storage')); // include this so useProfile hook knows to change user based adding new value to user on current tab
 
-            navigate("/home");
+            navigate("/home"); 
         }
         catch(err) {
             if (localStorage.user) { localStorage.removeItem(user); window.dispatchEvent( new Event('storage'));}
