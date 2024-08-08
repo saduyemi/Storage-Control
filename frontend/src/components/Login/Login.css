@@ -1,63 +1,86 @@
 .loginContainer {
+    display: flex;
+    border: 1px dashed black;
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+
+}
+
+.loginPicture {
     border: 1px solid black;
     border-radius: 10px;
-    margin: auto;
-    margin-top: 10%;
-    width: 75%;
-    height: 55%;
-
-    max-width: 700px;
-    max-height: 550px;
+    width: 45%;
+    height: 90%;
 }
 
-.loginForm {
-    border: 1px none blue;
-    border-radius: 10px;
-    height: 100%;
+.loginPicture > img {
     width: 100%;
-    padding: 5%;
+    height: 100%;
+    border-radius: 10px;
+}
+.loginForm {
+    border: 1px none gray;
+    border-radius: 10px;
+    height: 90%;
+    width: 55%;
+    /*padding-left: 1.8rem;*/
+    display: flex; 
+    align-items: center;
+    justify-content: center;
 }
 
+.loginFlex {
+    display: block;
+    border: 1px none black;
+    height: 90%;
+    width: 380px;
+    padding-left: 1.5rem;
+}
+#welcome {
+    margin: 4rem 0% 1rem 0%;
+    text-align: center;
+}
 .emailField {
-    margin: 10% 0%;
-    height: 10%;
-    width: 75%;
+    display: block;
+    margin: 4rem 0% 1rem 0%;
+    height: 8%;
+    width: 337px; /*55%;*/
 }
 
 .passwordField {
-    height: 10%;
-    width: 75%;
+    display: block;
+    height: 8%;
+    width: 337px; /*55%;*/
 }
 
 .loginBtn {
-    border: 1px black none;
+    display: block;
+    border: 1px none black;
     border-radius: 5px;
-    margin-top: 5%;
-    margin-left: 60%;
-    display: inline;
+    margin-top: 1rem;
+    margin-left: 5.8rem;
     
-    width: 70px;
-    height: 40px;
+    width: 155px;
+    height: 50px;
 
     background-color: skyblue;
     color: white;
     cursor: pointer;
-
 }
 
 .signBtn {
-    border: 1px black none;
-    border-radius: 5px;
-    margin-top: 5%;
-    margin-left: 5%;
     display: inline;
+    border: 1px none black;
+    border-radius: 5px;
     
     width: 70px;
     height: 40px;
 
-    background-color: skyblue;
-    color: white;
+    color: black;
     cursor: pointer;
+    text-decoration: underline;
 }
 
 .loginBtn:hover {
