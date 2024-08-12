@@ -3,11 +3,9 @@ import './InputForm.css'
 import { LoginContext } from '../../App'
 import { useAuth } from '../../Hooks/useAuth'; // could also put this hook in a context hook and just access it within component instead of importing
 import { useNavigate } from 'react-router-dom';
-import { base64StringToBlob } from 'blob-util'
-
-//import { arrayBufferToBlob, blobToBase64String } from 'blob-util';
 import Resizer from 'react-image-file-resizer';
 import { LoadingCircle } from '../LoadingCircle/LoadingCircle';
+
 const itemTemplate = {
     name: "",
     amount: 0,
@@ -118,10 +116,8 @@ export default function InputForm() {
                     const feed = await fetch('http://localhost:3000/create_item', options);
                     const feedback = await feed.json();
 
-                    refreshItems();
+                    refreshItems(); //kconsole.log(feedback); console.log(feedback.feedback.picture);
                     navigate("/home");
-                    //kconsole.log(feedback); console.log(feedback.feedback.picture);
-
                 }
                 catch (err) {
 
@@ -133,23 +129,23 @@ export default function InputForm() {
                     <div id='inputContainer'>
                         <form id='itemForm'>
                             <div className='inputTypes'>
-                                <label htmlFor='name' className='inputLabels'> Item Name: </label>
-                                <input type='text' id='name' placeholder='Name' onChange={(e) => {dispatch({type: "name_change", value: e.target.value})}} autoComplete='on'/> 
+                                <label htmlFor='name' className='inputLabels' style={{marginRight: '1.75rem'}} > Item Name: </label>
+                                <input type='text' id='name' placeholder='Enter Name:' onChange={(e) => {dispatch({type: "name_change", value: e.target.value})}} autoComplete='on'/> 
                             </div>
 
                             <div className='inputTypes'>                        
-                                <label htmlFor='amount' className='inputLabels'> Item Amount: </label>
+                                <label htmlFor='amount' className='inputLabels' style={{marginRight: '1.10rem'}} > Item Amount: </label>
                                 <input type='text' id='amount' placeholder='Amount' onChange={(e) => {dispatch({type: "amount_change", value: e.target.value})}} autoComplete='on'/> 
                             </div>
 
                             <div className='inputTypes'>
-                                <label htmlFor='category' className='inputLabels'> Item Category: </label>
-                                <input type='text' id='category' placeholder='Category' onChange={(e) => {dispatch({type: "category_change", value: e.target.value})}} autoComplete='on'/> 
+                                <label htmlFor='category' className='inputLabels' style={{marginRight: '0.5rem'}} > Item Category: </label>
+                                <input type='text' id='category' placeholder='Enter Category:' onChange={(e) => {dispatch({type: "category_change", value: e.target.value})}} autoComplete='on'/> 
                             </div>
 
                             <div className='inputTypes'>
-                                <label htmlFor='price' className='inputLabels'> Item Price: </label>
-                                <input type='text' id='price' placeholder='Price' onChange={(e) => {dispatch({type: "price_change", value: e.target.value})}} autoComplete='on'/> 
+                                <label htmlFor='price' className='inputLabels' style={{marginRight: '2.10rem'}} > Item Price: </label>
+                                <input type='text' id='price' placeholder='Enter Price:' onChange={(e) => {dispatch({type: "price_change", value: e.target.value})}} autoComplete='on'/> 
                             </div>
                             
                             <div className='inputTypes'>
@@ -159,17 +155,10 @@ export default function InputForm() {
 
                             <button onClick={(e) => { handleSubmit(e); }}>Submit</button>                   
                         </form>
+                        <div id='formImage'>
+                            {(imageurl) ? <img src={imageurl} /> : <></>}
+                        </div>
                     </div>
-
-                    {(imageurl) 
-                        ? 
-                        <>
-                            <p>Image</p> 
-                            <img src={imageurl} />
-                        </>
-                        : 
-                        <></>
-                    }
                 </>
             );
         } else {
@@ -180,62 +169,3 @@ export default function InputForm() {
         return ( <LoadingCircle/> );
     }
 }
-
-function fileToUri(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            resolve(e.target.result);
-        };
-        reader.readAsDataURL(file);
-    })
-}
-
-function base64ToBlob(base, contentType, sliceSize=512) {
-    const byteChars = atob(base);
-    const byteArrays = [];
-
-    for (let offset = 0; offset < byteChars.length; offset += sliceSize) {
-        const slice = byteChars.slice(offset, offset + sliceSize);
-
-        const byteNumbers = new Array(slice.length);
-        for (let i = 0; i < slice.length; i++) {
-            byteNumbers[i] = slice.charCodeAt(i);
-        }
-
-        const byteArray = new Uint8Array(byteNumbers);
-        byteArrays.push(byteArray);
-        const blob = new Blob(byteArrays, {type: contentType});
-
-        return blob;
-    }
-}
-
-function blobToBase64(blob) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-
-        reader.onloadend = (e) => {
-            resolve(e.target.result);
-        }
-
-        reader.readAsDataURL(blob);
-    })
-}
-/*
-function blobToBase64(blob) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-
-        reader.readAsArrayBuffer(blob);
-
-        reader.onloadend = (e) => {
-            // obtaining array buffer
-            let buffer = reader.result;
-
-            // converting arraybuffer to base64 string
-            let base64data = btoa(String.fromCharCode.apply(null, new Uint8Array(buffer)));
-        }
-    })
-}
-*/

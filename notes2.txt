@@ -50,3 +50,46 @@ async function prepFile(file) {
             .then(result => console.log(result))
             .catch(err => console.log(err))
 }
+
+// Extra
+function fileToUri(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            resolve(e.target.result);
+        };
+        reader.readAsDataURL(file);
+    })
+}
+
+function base64ToBlob(base, contentType, sliceSize=512) {
+    const byteChars = atob(base);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteChars.length; offset += sliceSize) {
+        const slice = byteChars.slice(offset, offset + sliceSize);
+
+        const byteNumbers = new Array(slice.length);
+        for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        const byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+        const blob = new Blob(byteArrays, {type: contentType});
+
+        return blob;
+    }
+}
+
+function blobToBase64(blob) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onloadend = (e) => {
+            resolve(e.target.result);
+        }
+
+        reader.readAsDataURL(blob);
+    })
+}

@@ -7,27 +7,33 @@
     margin: auto;
     margin-left: 15%;
     padding: 1rem;
+
+    display: flex;
+    flex-direction: column;
 }
 
 #itemForm {
     width: 100%;
-    height: 95%;
+    height: 50%;
     display: flex;
     flex-direction: column;
     row-gap: 20px;
-    border: 1px solid black;
+    border: 1px none blue;
     border-radius: 5px;
 }
 
 .inputTypes > label {
-    display: block;
-    margin-bottom: 4px;
+    display: inline-block;
+    margin-bottom: 0.25rem;
+    margin-left: 1rem;
 }
 
 .inputTypes > input[type='text'] {
     border: 1px solid black;
-    border-radius: 4.5px;
+    border-radius: 3px;
     width: 50%;
+    max-width: 500px;
+    min-width: 250px;
     height: 25px;
 }
 
@@ -35,7 +41,30 @@
     padding: 5px;
     max-width: 440px;
     width: 80%;
+    height: 35px;
     margin: auto;
+    background-color: lightblue;
+    border: 0px none black;
+    color: white;
 }
 
+#itemForm > button:hover {
+    color: lightblue;
+}
 
+#formImage {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    border: 1px solid black;
+    justify-content: center;
+    align-items: center;
+}
+
+#formImage > img {
+    width: 25%;
+    height: 70%;
+    min-width: 245px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
