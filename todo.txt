@@ -4,8 +4,8 @@
 ->.) If user is not authenticated stop loading screen and output a message                                      (/)     <- sent back to login screen instead of output message        
 ->.) Remove any traces of depending on localstorage, cause its not dependable for authentication                (/)     <- auth should only depend on cookie <- but navbar depends on localstorage <- localstorage should strictly depend on/be updated by useAuth                                                                                                       
 ->.) Check authentication at start since user can close window but still be logged in                           (/)
-->.) Update edit modal                                                                                          (?)
-->.) Update login and sign up page                                                                              (?)
-->.) Display error message for login and sign up                                                                (?)
+->.) Update edit modal                                                                                          (/)
+->.) Update login and sign up page                                                                              (/)
+->.) Display error message for login and sign up                                                                (/)
 ->.) Add some more bars to the navbar                                                                           (?)
 ->.) Maybe create an useInit hook and a useData                                                                 (?)
