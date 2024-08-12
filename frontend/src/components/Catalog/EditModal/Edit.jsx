@@ -112,18 +112,21 @@ export default function Edit({item, closeThis, resfresh}) {
             <div className='modal'>
                 <div className='modal-content'>
                     <form className='modal-form' >
-                        <button className='closeBtn' onClick={(e) => { e.preventDefault(); closeThis(); }}>Cancel</button>
-                        <br/>
-                        <img src={imageURL || defaultPicture} />
+                        <button className='closeBtn' onClick={(e) => { e.preventDefault(); closeThis(); }}>&times;</button>
+                        <br style={{marginBottom: '2rem'}} />
                         <input className='editText' type='text' placeholder={state.name}  value={state.name} onChange={(e) => {dispatch({type: "name_change", value: e.target.value}); }} />
                         <input className='editText' type='text' placeholder={state.amount} value={state.amount} onChange={(e) => {dispatch({type: "amount_change", value: e.target.value}); }} />
                         <input className='editText' type='text' placeholder={state.category} value={state.category} onChange={(e) => {dispatch({type: "category_change", value: e.target.value}); }} />
-                        <input className='editText' type='text' placeholder={state.price} value={state.price} onChange={(e) => {dispatch({type: "price_change", value: e.target.value}); }} />
-                        <input type='file' id='file' accept='image/png, image/jpeg' onChange={(e) => { dispatch({type: "file_change", value: e.target.files[0]}); preview(e.target.files[0]); }} /> 
+                        <input className='editText' type='text'  placeholder={state.price} value={state.price} onChange={(e) => {dispatch({type: "price_change", value: e.target.value}); }} />
+                        <input style={{marginTop: '2rem', marginBottom: '2rem'}} type='file' id='file' accept='image/png, image/jpeg' onChange={(e) => { dispatch({type: "file_change", value: e.target.files[0]}); preview(e.target.files[0]); }} /> 
                         <br/>
-                        <button onClick={(e) => { handleSubmit(e); }} >Submit</button>
+                        <button id='modalSubmit' onClick={(e) => { handleSubmit(e); }} >Submit</button>
                     </form>
+                    <div className='modal-image'>
+                        <img src={imageURL || defaultPicture} />
+                    </div>
                 </div>
+
             </div>
         </>
     );

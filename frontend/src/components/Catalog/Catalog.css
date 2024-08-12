@@ -4,7 +4,7 @@
 
     display: flex;
     justify-content: center;
-    border: 1px dashed black;
+    border: 1px none black;
     margin-left: 15%;
     padding-top: 4rem;
 }
@@ -29,7 +29,7 @@
     width: 170px;
     height: 190px; /*Have to give fixed height because specifed min-content for ul tag */
     
-    background-color: #f3f3f3;
+    background-color: white;
     border: 0.5px solid black;
     border-radius: 5px;
     box-shadow: 10px 10px 10px #9D9D9D;
@@ -41,7 +41,9 @@
     width: 50%;
     height: 45%;
 
-    margin: 2% 0%;
+    margin: 0.25rem 0% 0.2rem 0%;
+    border: 1px none black;
+    border-radius: 5px;
 }
 
 .items > p {
@@ -49,6 +51,12 @@
 }
 
 .items > button {
-    display: inline-block;
-    padding: 5px;
+    padding: 0.5rem;
+    background-color: white;
+    border: 1px none black;
+}
+.items > button:hover {
+    background-color: #f3f3f3;
+    border: 1px none black;
+    border-radius: 5px;
 }

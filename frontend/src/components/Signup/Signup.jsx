@@ -90,7 +90,7 @@ export default function Signup() {
         <>
             <div className='signContainer'>
                 <form className='signForm' onSubmit={(e) => handleSubmit(e)}>
-                    <p id='createText' >Create An Account</p>
+                    <p id='createText'>Create An Account</p>
                     
                     <input type='email' id='email' className='newEmailField' placeholder='Enter Email' onChange={(e) => { dispatch({type: "email_change", value: e.target.value}); }} autoComplete='on'/>
                     {(user.emailError) ? <p className='errors'>{user.emailMessage}</p> : <></>}

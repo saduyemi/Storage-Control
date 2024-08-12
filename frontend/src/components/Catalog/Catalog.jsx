@@ -6,6 +6,8 @@ import { useAuth } from '../../Hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import Edit from './EditModal/Edit';
 import { LoadingCircle } from '../LoadingCircle/LoadingCircle';
+import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function Catalog() {
     const [isModal, setModal] = useState(false);
@@ -50,8 +52,8 @@ export default function Catalog() {
                                 {items.map((anItem) => (
                                     <li key={anItem.ItemID}>
                                         <div className='items'>
-                                            <button style={{marginLeft: '45%'}} onClick={() => { deleteItem(anItem.ItemID)}} >D</button>
-                                            <button style={{marginLeft: '15%'}} onClick={() => {setItem({...anItem}); setModal(true); }}>E</button>
+                                            <button style={{marginLeft: '5.4rem'}} onClick={() => { deleteItem(anItem.ItemID)}} ><FontAwesomeIcon icon={faTrash} /> </button>
+                                            <button style={{marginLeft: '1.2rem'}} onClick={() => {setItem({...anItem}); setModal(true); }}><FontAwesomeIcon icon={faPenToSquare} /></button>
                                             <img src={(anItem.ItemPicture) ? anItem.ItemPicture : defaultPicture} />
                                             <p>{anItem.ItemName}</p>
                                             <p>{`Amount: ${anItem.ItemAmount} `}</p>
