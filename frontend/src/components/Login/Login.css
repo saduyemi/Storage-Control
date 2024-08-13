@@ -70,6 +70,11 @@
     cursor: pointer;
 }
 
+.loginBtn:hover {
+    color: skyblue;
+    background-color: skyblue;
+}
+
 .signBtn {
     display: inline;
     border: 1px none black;
@@ -81,8 +86,4 @@
     color: black;
     cursor: pointer;
     text-decoration: underline;
-}
-
-.loginBtn:hover {
-    color: skyblue;
 }

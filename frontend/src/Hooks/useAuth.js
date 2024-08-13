@@ -2,7 +2,7 @@ import { useEffect, useState} from 'react';
 
 // Custom hook to place at beginning of each component that requires authentication, if user is authenticated return true, otherwise return false
 export function useAuth() {
-    console.log("Authenticating Path....");
+    //kconsole.log("Authenticating Path....");
     const [checked, setChecked] = useState(false);
     const [completed, setCompleted] = useState(false);
 
@@ -20,7 +20,7 @@ export function useAuth() {
                 const feedback = await fetch("http://localhost:3000/isvalid", options);
                 const data = await feedback.json();
             
-                console.log(data.message);
+                //kconsole.log(data.message);
                 if (data.message === "JWT Does Not Exist" || data.message === "Tampered") { 
                     if (localStorage.user) { localStorage.removeItem("user"); window.dispatchEvent( new Event('storage')); setChecked(false); } // Note: might have to remove dispatch over here if it's causing long loading
                     setCompleted(true);

@@ -12,12 +12,13 @@
 }
 
 #summary {
-    width: 55%; max-width: 320px;
-    height: 55%;
+    width: 55%; max-width: 375px;
+    height: 65%;
     border: 2px solid #606467;
     border-radius: 10px;
 
     margin: auto;
+    margin-top: 2.5rem;
     padding: 1rem;
 
     box-shadow: 10px 10px 10px #9D9D9D;
