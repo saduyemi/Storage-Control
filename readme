@@ -1,0 +1,26 @@
+# Storage Control Project
+
+The Storage Control project is a web application that allows users to store items in a MySQL database, provided they create an account. This project demonstrates several important concepts in both frontend and backend development.
+
+## Project Overview
+
+### Frontend
+- **JavaScript (React)**
+  - Components
+  - Conditional Rendering
+  - Passing data through props
+  - Built-in hooks and custom hooks
+  - And more
+
+### Backend
+- **Node.js**
+  - Connecting to a database
+  - Sending HTTP responses with proper codes
+  - JWT Authentication
+  - Encrypting Passwords
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/saduyemi/Storage-Control.git
